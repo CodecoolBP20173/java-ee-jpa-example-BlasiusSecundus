@@ -15,6 +15,9 @@ public class Address {
     private String city;
     private String addr;
 
+    @OneToOne(mappedBy = "address")
+    private Student student;
+
     public Address() {
     }
 
@@ -76,4 +79,7 @@ public class Address {
                 '}';
     }
 
+    public Student getStudent() {
+        return student;
+    }
 }
