@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Collections;
 
 @Entity
 public class Student {
@@ -27,6 +28,11 @@ public class Student {
     @OneToOne
     private Address address;
 
+    @ElementCollection
+    @CollectionTable(name="Phone")
+    @Column(name = "phone")
+    private List<String> phoneNumbers = new ArrayList<>();
+
     public Student() {
     }
 
@@ -41,6 +47,11 @@ public class Student {
     public Student(String name, String email, Date dateOfBirth, Address address) {
         this(name, email, dateOfBirth);
         this.address = address;
+    }
+
+    public Student(String name, String email, Date dateOfBirth, Address address, List<String> phoneNumbers) {
+        this(name, email, dateOfBirth, address);
+        Collections.copy(this.phoneNumbers, phoneNumbers);
     }
 
     public long getId() {
@@ -85,6 +96,10 @@ public class Student {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<String> getPhoneNumbers(){
+        return Collections.unmodifiableList(phoneNumbers);
     }
 
     @Override
